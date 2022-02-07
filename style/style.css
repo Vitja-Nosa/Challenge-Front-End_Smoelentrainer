@@ -1,0 +1,17 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+.pointer {
+    cursor: pointer;
+}
+#timerContainer {
+    width: 70%;
+    margin: 0 auto;
+    text-align: left;
+    padding: 0;
+}
+#timer {
+    width: 100%;
+    transition: linear 1000ms;
+}
