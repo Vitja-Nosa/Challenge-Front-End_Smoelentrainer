@@ -5,6 +5,34 @@
 .pointer {
     cursor: pointer;
 }
+/* styling of images */
+#imgContainer img {
+    width: 200px;
+    margin: 10px;
+    cursor: pointer;
+    border: 4px #0d6efd solid;
+}
+.selectedImg {
+    border: 4px red solid !important;
+}
+#resultImg {
+    display: none;
+    width: 40px;
+}
+/* styling of buttons */
+#btnContainer button {
+    margin: 4px;
+    box-shadow: none;
+    background-color: #198754;
+    border: 4px darkgreen solid;
+}
+.selectedBtn {
+    color: #fff;
+    background-color: #157347 !important;
+    border: 4px red solid !important;
+    box-shadow: none !important;
+}
+/* styling of timer */
 #timerContainer {
     width: 70%;
     margin: 0 auto;
@@ -13,5 +41,5 @@
 }
 #timer {
     width: 100%;
-    transition: linear 1000ms;
+    transition: linear 1100ms;
 }
