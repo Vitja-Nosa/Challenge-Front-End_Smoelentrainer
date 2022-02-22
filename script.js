@@ -1,43 +1,58 @@
-const imgContainer = document.getElementById('imgContainer')
-const btnContainer = document.getElementById('btnContainer');
-const scoreElem = document.getElementById('score');
-const livesElem = document.getElementById('livesElem');
-
-const preGameContainer = document.getElementById('preGameContainer'),
+const imgContainer = document.getElementById('imgContainer'),
+btnContainer = document.getElementById('btnContainer'),
+scoreElem = document.getElementById('score'),
+livesElem = document.getElementById('livesElem'),
+preGameContainer = document.getElementById('preGameContainer'),
+postGameContainer = document.getElementById('postGameContainer'),
 gameContainer = document.getElementById('gameContainer'),
-timer = document.getElementById('timer');
+timer = document.getElementById('timer'),
+startBtn = document.getElementById('startBtn'),
+finalScoreElem = document.getElementById('finalScore'),
+finalLivesElem = document.getElementById('finalLives')
+feedbackElem = document.getElementById('feedback'),
+timeLeftElem = document.getElementById('timeLeft');
 
-const startBtn = document.getElementById('startBtn')
 startBtn.onclick = startGame;
 
 var lastClickedImg;
 var lastClickedBtn;
 
-var imgAmount = 10;
+var matchAmount = 10;
 var score = 0;
 var lives = 3;
+
+var timerInterval;
+var currentTimeSec;
 
 function startGame(){
     preGameContainer.style.display = 'none';
     gameContainer.style.display = 'block'
     livesElem.innerText = `Attempts left: ${lives}`;
     shuffle(movies, 10)
-    usedMovies = movies.splice(0,imgAmount)
+    usedMovies = movies.splice(0,matchAmount)
     createElements(usedMovies);
+    startTimer(60)
+}
+
+function endGame(reason = 'Game Over') {
+    clearInterval(timerInterval)
+    gameContainer.style.display = 'none';
+    postGameContainer.style.display = 'block';
+    finalScoreElem.innerText = `Score: ${score}`;
+    finalLivesElem.innerText = `Attempts left: ${lives}`;
+    timeLeftElem.innerText = `Time remaining: ${currentTimeSec}s`;
+    feedbackElem.innerText = reason;
 }
 
 function startTimer(time) {
     timer.style.width = '100%';
     const TOTALTIMER = time;
-    var currentTimeSec = TOTALTIMER-1
+    currentTimeSec = TOTALTIMER-1
     var procent;
-    var timerInterval = setInterval(function(){
+    timerInterval = setInterval(function(){
         if(currentTimeSec == 0){
-            clearInterval(timerInterval)
             setTimeout(function(){  
-                setTimeout(function(){
-                    timer.style.display = "none";
-                },500)
+                endGame('Times Up!');
             }, 1000)
         }
         procent = currentTimeSec / TOTALTIMER * 100
@@ -97,6 +112,9 @@ function checkMatch() {
             lastClickedBtn.remove();
             lastClickedImg.remove();
             document.body.style.backgroundColor = '#90EE90';
+            if (score == matchAmount) {
+                endGame('You won');
+            }
             
         }
         else {
@@ -105,6 +123,9 @@ function checkMatch() {
             lastClickedImg.classList.remove('selectedImg')
             lastClickedBtn.classList.remove('selectedBtn')
             document.body.style.backgroundColor = '#FF7F7F';
+            if (lives == 0) {
+                endGame('No more attempts');
+            }
         }
         setTimeout(() => {
             document.body.style.backgroundColor = 'white';
@@ -122,4 +143,3 @@ function addLastClickedStyling(container, className, that) {
     }
     that.classList.add(className)
 }
-startTimer(60)
