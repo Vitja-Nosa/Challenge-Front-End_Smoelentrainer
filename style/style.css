@@ -15,10 +15,6 @@
 .selectedImg {
     border: 4px red solid !important;
 }
-#resultImg {
-    display: none;
-    width: 40px;
-}
 /* styling of buttons */
 #btnContainer button {
     margin: 4px;
@@ -42,8 +38,4 @@
 #timer {
     width: 100%;
     transition: linear 1100ms;
-}
-/* styling of result screen content */
-#postGameContainer {
-    display: none;
 }
