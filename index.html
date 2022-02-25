@@ -14,14 +14,14 @@
     <main class="container">
         <div class="row">
             <div class="button-container text-center mt-1 mb-5">
-                <button class="btn-lg btn-primary mx-1">Smoelentrainer</button>
+                <button class="btn-lg btn-primary mx-1" onclick="renderHTML(pages.preGameContainer)">Smoelentrainer</button>
                 <button class="btn-lg btn-primary mx-1">Audiotrainer</button>
                 <button class="btn-lg btn-primary mx-1">History</button>
-                <button class="btn-lg btn-primary mx-1">Settings</button>
+                <button class="btn-lg btn-primary mx-1" onclick="renderHTML(pages.settingsContainer)">Settings</button>
             </div>
         </div>
         
-        <div class="row" id="contentContainer">
+        <div class="row justify-content-center" id="contentContainer">
             <!-- <div id="gameContainer" style="display: none;">
                 <div class="row text-center">
                     <h2 class="col" id="score">Socre: 0</h2>

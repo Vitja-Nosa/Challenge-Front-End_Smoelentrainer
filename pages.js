@@ -16,8 +16,8 @@ const pages = {
         </div>
         <div id='imgContainer' class="img-container text-center my-3"></div>
         <div id='btnContainer' class="word-container text-center my-3"></div>
-        <div class="row mt-5">
-            <div id="timerContainer" class="progress my-5">
+        <div class="row mt-5" id="timerContainer">
+            <div class="progress my-5">
                 <div id="timer" class="progress-bar"></div>
             </div>
         </div>   
@@ -38,7 +38,57 @@ const pages = {
         <div class="row mx-auto justify-content-center my-5">
             <button class="btn btn-primary col-2" onclick="renderHTML(pages.preGameContainer)">Play Again</button>
         </div>
-    </div>`
+    </div>`,
+    settingsContainer :
+    `<div id="settingsContainer" class="col-6">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Options</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01">
+                <option selected>Choose...</option>
+                <option value="1">easy</option>
+                <option value="2">medium</option>
+                <option value="3">hard</option>
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Total time</span>
+            </div>
+            <input type="number" min="10" value="10" class="form-control" placeholder="0 for endless time" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+                <span class="input-group-text">sec</span>
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Match amount</span>
+            </div>
+            <input type="number" min="5" value="5" class="form-control" placeholder="match amount" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="gueesThe">Guees the</label>
+            </div>
+            <select class="custom-select" id="gueesThe">
+                <option selected>Choose...</option>
+                <option value="1">movie name</option>
+                <option value="2">character name</option>
+                <option value="3">actor name</option>
+            </select>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="drymode">
+            <label class="form-check-label" for="flexCheckDefault">
+                Don't show my already corrected matches
+            </label>
+        </div>
+        <button class="btn btn-primary my-4">Save</button>
+    </div>
+    `
 }
+
+
 
 

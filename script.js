@@ -1,15 +1,17 @@
 var elems = {}
 
 var gameData = {
+    isGameRunning: false,
     difficulty: 'easy',
     lives: 3,
     matchAmount : 6,
-    totalTime: 60,
+    totalTime: 0,
     score : 0,
     lastClickedBtn : undefined,
     lastClickedImg : undefined,
     timerInterval : undefined,
-    currentTimeSec : undefined
+    currentTimeSec : undefined,
+    wrongMatches: []
 }
 
 const GAMEDATACLONE = JSON.parse(JSON.stringify(gameData)) // cloning the original gameData object
@@ -18,6 +20,7 @@ window.onload = renderHTML(pages.preGameContainer)
 
 function startSmoelentrainer() {
     gameData = JSON.parse(JSON.stringify(GAMEDATACLONE));
+    gameData.isGameRunning = true;
     renderHTML(pages.gameContainer);
     shuffle(movies, 10)
     usedMovies = movies.slice(0, gameData.matchAmount)
@@ -26,31 +29,49 @@ function startSmoelentrainer() {
     startTimer(gameData.totalTime)
 }
 
-function endSmoelentrainer(reason = 'Game Over') {
+function showResults(reason = 'Game Over') {
+    endGame();
     renderHTML(pages.postGameContainer);
-    clearInterval(gameData.timerInterval)
     elems.finalScore.innerText = `Score: ${gameData.score}`;
     elems.finalLives.innerText = `Attempts left: ${gameData.lives}`;
     elems.timeLeft.innerText = `Time remaining: ${gameData.currentTimeSec}s`;
     elems.feedback.innerText = reason;
 }
 
+function endGame() {
+    gameData.isGameRunning = false;
+    if (gameData.timerInterval != undefined) {
+        clearInterval(gameData.timerInterval);
+    }
+}
+
+function saveResults() {
+
+}
+
 function startTimer(time) {
-    elems.timer.style.width = '100%';
-    const TOTALTIMER = time;
-    gameData.currentTimeSec = TOTALTIMER-1
-    var procent;
-    gameData.timerInterval = setInterval(function(){
-        if(gameData.currentTimeSec == 0){
-            setTimeout(function(){
+    if (time !== 0) {
+        elems.timer.style.width = '100%';
+        const TOTALTIMER = time;
+        gameData.currentTimeSec = TOTALTIMER-1
+        var procent;
+        gameData.timerInterval = setInterval(function(){
+            console.log('still running')
+            if(gameData.currentTimeSec == 0){
                 gameData.currentTimeSec = 0;
-                endSmoelentrainer('Times Up!');
-            }, 1000)
-        }
-        procent = gameData.currentTimeSec / TOTALTIMER * 100
-        elems.timer.style.width = procent + '%';
-        gameData.currentTimeSec--;
-    }, 1000)
+                endGame();
+            }
+            else {
+                procent = gameData.currentTimeSec / TOTALTIMER * 100
+                elems.timer.style.width = procent + '%';
+                gameData.currentTimeSec--;
+            }
+        }, 1000)
+    }
+    else {
+        elems.timerContainer.style.display = 'none'
+    }
+    
 }
 
 function shuffle(arr, amt) {
@@ -109,18 +130,19 @@ function checkMatch() {
             gameData.lastClickedImg.remove();
             document.body.style.backgroundColor = '#90EE90';
             if (gameData.score == gameData.matchAmount) {
-                endSmoelentrainer('You won');
+                endGame('You won');
             }
             
         }
         else {
             gameData.lives--
+            gameData.wrongMatches.push(gameData.lastClickedImg.id);
             elems.lives.innerText = `Attempts left: ${gameData.lives}`;
             gameData.lastClickedImg.classList.remove('selectedImg')
             gameData.lastClickedBtn.classList.remove('selectedBtn')
             document.body.style.backgroundColor = '#FF7F7F';
             if (gameData.lives == 0) {
-                endSmoelentrainer('No more attempts');
+                endGame('No more attempts');
             }
         }
         setTimeout(() => {
