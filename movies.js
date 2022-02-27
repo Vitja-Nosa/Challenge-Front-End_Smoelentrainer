@@ -1,74 +1,92 @@
 const movies = [
     {
-        id: 1,
-        name: 'Agent Smith',
+        character: 'Agent Smith',
         movie: 'The Matrix',
-        img: 'images/agent_smith.jpg'
+        img: 'images/agent_smith.jpg',
+        actor: 'Hugo Weaving'
     },
     {
-        id: 2,
-        name: 'Bruce Wayne',
+        character: 'Bruce Wayne',
         movie: 'The Dark Knight',
-        img: 'images/bruce_wayne.jpg'
+        img: 'images/bruce_wayne.jpg',
+        actor: 'Christian Bale'
     },
     {
-        id: 3,
-        name: 'Calvin Candie',
+        character: 'Calvin Candie',
         movie: 'Django Unchained',
-        img: 'images/calvin_candie.png'
+        img: 'images/calvin_candie.png',
+        actor: 'Leonardo DiCaprio'
     },
     {
-        id: 4,
-        name: 'Cooper',
+        character: 'Cooper',
         movie: 'Interstellar',
-        img: 'images/cooper.jpg'
+        img: 'images/cooper.jpg',
+        actor: 'Matthew McConaughey'
     },
     {
-        id: 5,
-        name: 'David Mills',
+        character: 'David Mills',
         movie: 'Se7en',
-        img: 'images/david_mills.jpg'
+        img: 'images/david_mills.jpg',
+        actor: 'Brad Pitt'
     },
     {
-        id: 6,
-        name: 'Frank Abagnale',
+        character: 'Frank Abagnale',
         movie: 'Catch Me If You Can',
-        img: 'images/frank_abagnale.png'
+        img: 'images/frank_abagnale.png',
+        actor: 'Leonardo DiCaprio'
     },
     {
-        id: 7,
-        name: 'Maximus',
+        character: 'Maximus',
         movie: 'Gladiator',
-        img: 'images/maximus.jpg'
+        img: 'images/maximus.jpg',
+        actor: 'Russell Crowe'
     },
     {
-        id: 8,
-        name: 'Norman Osborn',
+        character: 'Norman Osborn',
         movie: 'Spiderman',
-        img: 'images/norman_osborn.jpg'
+        img: 'images/norman_osborn.jpg',
+        actor: 'Willem Dafoe'
     },
     {
-        id: 9,
-        name: 'Sherlock Holmes',
+        character: 'Sherlock Holmes',
         movie: 'Sherlock Holmes',
-        img: 'images/sherlock_holmes.jpg'
+        img: 'images/sherlock_holmes.jpg',
+        actor: 'Robert Downey Jr.'
     },
     {
-        id: 10,
-        name: 'Truman',
+        character: 'Truman',
         movie: 'The Truman Show',
-        img: 'images/truman.jpg'
+        img: 'images/truman.jpg',
+        actor: 'Jim Carrey'
     },
     {
-        id: 11,
-        name: 'Walter White',
+        character: 'Walter White',
         movie: 'Breaking Bad',
-        img: 'images/walter_white.jpg'
+        img: 'images/walter_white.jpg',
+        actor: 'Bryan Cranston'
     },
     {
-        id: 12,
-        name: 'Patrick Bateman',
+        character: 'Patrick Bateman',
         movie: 'American Psycho',
-        img: 'images/patrick_bateman.jpg'
+        img: 'images/patrick_bateman.jpg',
+        actor: 'Christian Bale'
+    },
+    {
+        character: 'Vincent',
+        movie: 'Pulp Fiction',
+        img: 'images/vincent.jpg',
+        actor: 'John Travolta'
+    },
+    {
+        character: 'Ransom',
+        movie: 'Knives out',
+        img: 'images/ransom.png',
+        actor: 'Chris Evans'
+    },
+    {
+        character: 'Arthur Fleck',
+        movie: 'Joker',
+        img: 'images/arthur_fleck.png',
+        actor: 'Joaquin Phoenix'
     }
 ]

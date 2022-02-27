@@ -43,20 +43,20 @@ const pages = {
     `<div id="settingsContainer" class="col-6">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                <label class="input-group-text" for="difficulty">Difficulty</label>
             </div>
-            <select class="custom-select" id="inputGroupSelect01">
-                <option selected>Choose...</option>
-                <option value="1">easy</option>
-                <option value="2">medium</option>
-                <option value="3">hard</option>
+            <select id="difficulty" class="custom-select setting" onchange="setDifficulty()">
+                <option id="easy" value="easy">easy</option>
+                <option id="medium" value="medium">medium</option>
+                <option id="hard" value="hard">hard</option>
+                <option id="custom" value="custom">custom</option>
             </select>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Total time</span>
             </div>
-            <input type="number" min="10" value="10" class="form-control" placeholder="0 for endless time" aria-describedby="basic-addon1">
+            <input id="totalTime" type="number" min="10" value="10" class="form-control setting" placeholder="0 for endless time" aria-describedby="basic-addon1">
             <div class="input-group-append">
                 <span class="input-group-text">sec</span>
             </div>
@@ -65,26 +65,26 @@ const pages = {
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Match amount</span>
             </div>
-            <input type="number" min="5" value="5" class="form-control" placeholder="match amount" aria-describedby="basic-addon1">
+            <input id="matchAmount" type="number" min="5" value="5" class="form-control setting" placeholder="match amount" aria-describedby="basic-addon1">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <label class="input-group-text" for="gueesThe">Guees the</label>
+                <label class="input-group-text" for="guessBy">Guess the</label>
             </div>
-            <select class="custom-select" id="gueesThe">
+            <select class="custom-select setting" id="guessBy" class="setting">
                 <option selected>Choose...</option>
-                <option value="1">movie name</option>
-                <option value="2">character name</option>
-                <option value="3">actor name</option>
+                <option value="movie">movie name</option>
+                <option value="character">character name</option>
+                <option value="actor">actor name</option>
             </select>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="drymode">
+            <input class="form-check-input" type="checkbox" id="dryMode">
             <label class="form-check-label" for="flexCheckDefault">
                 Don't show my already corrected matches
             </label>
         </div>
-        <button class="btn btn-primary my-4">Save</button>
+        <button onclick="saveSettings()" class="btn btn-primary my-4">Save</button>
     </div>
     `
 }
