@@ -7,7 +7,8 @@
 }
 /* styling of images */
 #imgContainer img {
-    width: 200px;
+    max-width: 200px;
+    max-height: 200px;
     margin: 10px;
     cursor: pointer;
     border: 4px #0d6efd solid;
@@ -35,9 +36,13 @@
     text-align: left;
     padding: 0;
 }
+.timerShell {
+    padding: 0 !important;
+}
 #timer {
     width: 100%;
     transition: linear 1100ms;
+    padding: 0 !important;
 }
 /* styling of settings modal */
 

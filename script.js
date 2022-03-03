@@ -85,9 +85,10 @@ function startTimer(time) {
         gameData.currentTimeSec = TOTALTIMER-1
         var procent;
         gameData.timerInterval = setInterval(function(){
-            if(gameData.currentTimeSec == 0){
+            console.log('timer running')
+            if(gameData.currentTimeSec == -1){
                 gameData.currentTimeSec = 0;
-                showResults();
+                showResults('Out of Time!');
             }
             else {
                 procent = gameData.currentTimeSec / TOTALTIMER * 100
@@ -200,6 +201,7 @@ function renderHTML(html) {
 }
 
 function saveSettings() {
+    elems.feedbackAlert.style.display = "block";
     if (elems.totalTime.value < 10) {
         elems.totalTime.value = 10;
     }
@@ -226,6 +228,13 @@ function setSettings() {
 
 function loadSettingsPage() {
     renderHTML(pages.settingsContainer);
+    elems.settingsContainer.querySelectorAll('.setting').forEach((elem) => {
+        if (elem != elems.difficulty) {
+            elem.onchange = function() {
+                elems.feedbackAlert.style.display = 'none'
+            }
+        }  
+    })
     elems.matchAmount.max = movies.length
     if (localStorage.length > 0) {
         elems[localStorage.getItem('difficulty')].selected = true
