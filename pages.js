@@ -89,6 +89,21 @@ const pages = {
         </div>
         <button onclick="saveSettings()" class="btn btn-primary my-4">Save</button>
     </div>
+    `,
+    historyContainer :
+    `
+        <div class="row my-3">
+            <div class="col">
+                <label for="sortBy">Sort by:</label>
+                <select id="sortBy">
+                    <option value="date">Date</option>
+                    <option value="score">Score</option>
+                </select>
+            </div>
+        </div>
+        <ul class="row" id="log">
+            <span class='text-center display-6'>You havn't played any games yet.</span>
+        </ul>
     `
 }
 

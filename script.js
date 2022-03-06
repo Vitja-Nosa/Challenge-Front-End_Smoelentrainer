@@ -59,7 +59,7 @@ function startSmoelentrainer() {
     startTimer(settings.totalTime)
 }
 
-function showResults(reason = 'Game Over') {
+function showResults(reason) {
     renderHTML(pages.postGameContainer);
     elems.finalScore.innerText = `Score: ${gameData.score}`;
     elems.finalLives.innerText = `Attempts left: ${gameData.lives}`;
@@ -67,15 +67,55 @@ function showResults(reason = 'Game Over') {
     elems.feedback.innerText = reason;
 }
 
-function endGame() {
+function showHistory() {
+    renderHTML(pages.historyContainer);
+    generateLog()
+}
+
+function generateLog() {
+    if (gameHistory.length > 0) {
+        elems.log.innerHTML = "";
+        gameHistory.forEach((value) => {
+            var elem = document.createElement("li");
+            elem.innerText = `Date: ${value.date}; Time: ${value.time}; Score: ${value.score}; Difficulty: ${value.difficulty}`;
+            if (value.finished) {
+                elem.style.backgroundColor = "#90EE90";
+            } 
+            else {
+                elem.style.backgroundColor = "#FF7F7F";
+            }
+            elems.log.appendChild(elem);
+        })
+    }
+}
+
+function endGame(finished, reason = 'Game Over') {
     gameData.isGameRunning = false;
     if (gameData.timerInterval != undefined) {
         clearInterval(gameData.timerInterval);
     }
+    showResults(reason);
+    saveResults(finished);
 }
 
-function saveResults() {
+function saveResults(finished) {
+    var today = new Date();
+    var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+    var time = today.getHours() + ":" + today.getMinutes();
+    gameHistory.push(new Results(date, time, gameData.score, settings.difficulty, finished));
+    if (gameHistory.length > 10) {
+        gameHistory.splice(0, 1)
+    }
+}
 
+class Results {
+    constructor(date, time, score, difficulty, finished) {
+        this.date = date;
+        this.time = time;
+        this.score = score;
+        this.difficulty = difficulty;
+        this.finished = finished;
+    }
 }
 
 function startTimer(time) {
@@ -88,7 +128,7 @@ function startTimer(time) {
             console.log('timer running')
             if(gameData.currentTimeSec == -1){
                 gameData.currentTimeSec = 0;
-                showResults('Out of Time!');
+                endGame(false, 'Out of Time!');
             }
             else {
                 procent = gameData.currentTimeSec / TOTALTIMER * 100
@@ -159,7 +199,7 @@ function checkMatch() {
             gameData.lastClickedImg.remove();
             document.body.style.backgroundColor = '#90EE90';
             if (gameData.score == settings.matchAmount) {
-                showResults('You won');
+                endGame(true, 'You won');
             }
             
         }
@@ -171,7 +211,7 @@ function checkMatch() {
             gameData.lastClickedBtn.classList.remove('selectedBtn')
             document.body.style.backgroundColor = '#FF7F7F';
             if (gameData.lives == 0) {
-                showResults('No more attempts');
+                endGame(false, 'No more attempts');
             }
         }
         setTimeout(() => {
@@ -190,8 +230,9 @@ function addLastClickedStyling(container, className, that) {
 }
 
 function renderHTML(html) {
-    if (gameData.isGameRunning) {
-        endGame();
+    if (gameData.timerInterval != undefined) {
+        clearInterval(gameData.timerInterval);
+        gameData.isGameRunning = false;
     }
     document.getElementById('contentContainer').innerHTML = html;
     elems = {}
@@ -281,3 +322,17 @@ function setDifficulty() {
         }
     }
 }
+
+// function sortHistory() {
+//     if (elems.sortBy.value == 'score') {
+//         var newHistory = [];
+//         var gameHistoryClone = [...gameHistory];
+//         var highestScore = gameHistory[gameHistory.length-1]
+//         for (i=gameHistory.length-1; i>=0; i++) {
+//             if (gameHistory[i].score > highestScore.score) {
+//                 highestScore = gameHistory[i]
+//             }
+//         }
+
+//     }
+// }
