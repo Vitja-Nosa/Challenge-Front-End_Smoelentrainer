@@ -19,8 +19,10 @@ const pages = {
             <h2 class="col" id="score">Socre: 0</h2>
             <h2 class="col" id="lives">Attempts left: 0</h2>
         </div>
-        <div id='imgContainer' class="img-container text-center my-3"></div>
-        <div id='btnContainer' class="word-container text-center my-3"></div>
+        <div class="row">
+            <div id='imgContainer' class="img-container text-center my-3"></div>
+            <div id='btnContainer' class="word-container text-center my-3"></div>
+        <div>
     </div>`,
     postGameContainer :
     `<div class="row border border-dark" id="postGameContainer">
@@ -95,7 +97,7 @@ const pages = {
         <div class="row my-3">
             <div class="col">
                 <label for="sortBy">Sort by:</label>
-                <select id="sortBy">
+                <select id="sortBy" onchange="sortHistory(); generateLog();">
                     <option value="date">Date</option>
                     <option value="score">Score</option>
                 </select>

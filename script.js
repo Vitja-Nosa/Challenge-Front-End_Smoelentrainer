@@ -69,7 +69,7 @@ function showResults(reason) {
 
 function showHistory() {
     renderHTML(pages.historyContainer);
-    generateLog()
+    sortHistory();
 }
 
 function generateLog() {
@@ -77,7 +77,7 @@ function generateLog() {
         elems.log.innerHTML = "";
         gameHistory.forEach((value) => {
             var elem = document.createElement("li");
-            elem.innerText = `Date: ${value.date}; Time: ${value.time}; Score: ${value.score}; Difficulty: ${value.difficulty}`;
+            elem.innerText = `Date: ${value.date}; Score: ${value.score}; Difficulty: ${value.difficulty}`;
             if (value.finished) {
                 elem.style.backgroundColor = "#90EE90";
             } 
@@ -100,18 +100,16 @@ function endGame(finished, reason = 'Game Over') {
 
 function saveResults(finished) {
     var today = new Date();
-    var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-    var time = today.getHours() + ":" + today.getMinutes();
-    gameHistory.push(new Results(date, time, gameData.score, settings.difficulty, finished));
+    var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear() + ' ' + today.getHours() + ":" + today.getMinutes();
+    gameHistory.push(new Results(date, gameData.score, settings.difficulty, finished));
     if (gameHistory.length > 10) {
         gameHistory.splice(0, 1)
     }
 }
 
 class Results {
-    constructor(date, time, score, difficulty, finished) {
+    constructor(date, score, difficulty, finished) {
         this.date = date;
-        this.time = time;
         this.score = score;
         this.difficulty = difficulty;
         this.finished = finished;
@@ -323,16 +321,17 @@ function setDifficulty() {
     }
 }
 
-// function sortHistory() {
-//     if (elems.sortBy.value == 'score') {
-//         var newHistory = [];
-//         var gameHistoryClone = [...gameHistory];
-//         var highestScore = gameHistory[gameHistory.length-1]
-//         for (i=gameHistory.length-1; i>=0; i++) {
-//             if (gameHistory[i].score > highestScore.score) {
-//                 highestScore = gameHistory[i]
-//             }
-//         }
+function sortHistory() {
+    if (elems.sortBy.value == 'score') {
+        gameHistory.sort((a,b) => {
+            return b.score - a.score 
+        })
+    }
+    else {
+        gameHistory.sort((a,b) => {
+            return new Date(a.date) - new Date(b.date);
+        })
+    }
+    generateLog()
+}
 
-//     }
-// }
