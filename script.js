@@ -1,5 +1,6 @@
 var elems = {}
 var gameHistory = []
+var AllwrongMatches = []
 
 var settings = {
     difficulty: 'easy',
@@ -17,7 +18,7 @@ var gameData = {
     lastClickedImg : undefined,
     timerInterval : undefined,
     currentTimeSec : undefined,
-    wrongMatches: []
+    wrongMatches : []
 }
 
 const DIFFICULTIES = {
@@ -94,6 +95,10 @@ function endGame(finished, reason = 'Game Over') {
     if (gameData.timerInterval != undefined) {
         clearInterval(gameData.timerInterval);
     }
+    AllwrongMatches.push(gameData.wrongMatches)
+    if (AllwrongMatches.length > 5) {
+        AllwrongMatches.splice(0,1)
+    }
     showResults(reason);
     saveResults(finished);
 }
@@ -163,7 +168,8 @@ function createElements(arr) {
     for (i=0; i<qty; i++) {
         var elem = document.createElement('img');
         elem.src = arr[i]['img'];
-        elem.dataset.id = arr[i][settings.guessBy] // giving id so we can match with btns later
+        elem.dataset.match = arr[i][settings.guessBy] // giving id so we can match with btns later
+        elem.dataset.id = arr[i]['id']
         elem.onclick = function() {
             gameData.lastClickedImg = this; // remembering the last img we clicked for matching
             addLastClickedStyling(elems.imgContainer, 'selectedImg', this)
@@ -176,8 +182,8 @@ function createElements(arr) {
     for (i=0; i<qty; i++) {
         var elem = document.createElement('button');
         elem.innerText = arr[i][settings.guessBy];
-        elem.dataset.id = arr[i][settings.guessBy]; // same id as matching img
-        elem.classList = 'btn btn-success';
+        elem.dataset.match = arr[i][settings.guessBy]; // same id as matching img
+        elem.classList = 'btn btn-success my-2';
         elem.onclick = function() {
             gameData.lastClickedBtn = this
             addLastClickedStyling(elems.btnContainer, 'selectedBtn', this)
@@ -190,7 +196,7 @@ function createElements(arr) {
 
 function checkMatch() {
     if (gameData.lastClickedImg != undefined && gameData.lastClickedBtn != undefined) {
-        if (gameData.lastClickedBtn.dataset.id == gameData.lastClickedImg.dataset.id) {
+        if (gameData.lastClickedBtn.dataset.match == gameData.lastClickedImg.dataset.match) {
             gameData.score++
             elems.score.innerText = `Score: ${gameData.score}`;
             gameData.lastClickedBtn.remove();
@@ -335,3 +341,86 @@ function sortHistory() {
     generateLog()
 }
 
+layout = 'rows'
+function changeLayout() {
+    if (layout == 'rows') {
+        elems.imgContainer.classList.add('col-4');
+        elems.btnContainer.classList.add('col-4');
+        elems.btnContainer.parentElement.style.justifyContent = "space-around"
+        elems.btnContainer.querySelectorAll('button').forEach((value) => {
+            value.style.display = 'block';
+        })
+        elems.imgContainer.querySelectorAll('img').forEach((value) => {
+            value.style.display = 'block';
+        })
+        layout = 'cols'
+    }
+    else {
+        layout = 'rows'
+        elems.imgContainer.classList.remove('col-4');
+        elems.btnContainer.classList.remove('col-4');
+        elems.btnContainer.parentElement.style.justifyContent = "initial"
+        elems.btnContainer.querySelectorAll('button').forEach((value) => {
+            value.style.display = 'initial';
+        })
+    }
+}
+
+function showBlindSpot() {
+    renderHTML(pages.blindSpotContainer);
+    mismatches = []
+    AllwrongMatches.forEach((arr) => {
+        arr.forEach((value) => {
+            mismatches.push(value)
+        })
+    })
+    top3 = findMostCommon(mismatches)
+    if (top3[0] == undefined) {
+        renderHTML("<h2 class='text-center display-6'>You havn't made a mistake yet, good job!</h2>")
+    }
+    else {
+        for (i=0; i<top3.length; i++) {
+            if (top3[i] != undefined) {
+                elem_container = document.createElement('div')
+                elem_container.classList.add('col-4')
+                elem_img = document.createElement('img')
+                obj = movies.find( ({ id }) => id == top3[i] )
+                elem_img.src = obj['img']
+                elem_container.appendChild(elem_img)
+                elem_h3 = document.createElement('h3')
+                elem_h3.innerText = obj['character']
+                elem_container.appendChild(elem_h3)
+                elems.blindSpotSubContainer.appendChild(elem_container)
+            }
+        }
+    }
+}
+
+function findMostCommon(arr) {
+    top3 = []
+    for (k=0; k<3; k++) {
+      counted = []
+      for(j=0; j<arr.length; j++) {
+          count = 0
+          for(i=0; i<arr.length; i++) {
+              if (arr[i] == arr[j]) {
+                  count++
+              }
+          }
+          counted.push(count)
+      }
+      highestNumber = counted[0]
+      for (i=0; i<counted.length; i++) {
+          if (counted[i] > highestNumber) {
+              highestNumber = counted[i]
+          }
+      }
+      top3.push(arr[counted.indexOf(highestNumber)])
+      for (i=arr.length; i>=0; i--) {
+        if(arr[i] == arr[counted.indexOf(highestNumber)]) {
+          arr.splice(i, 1)
+        }
+      }
+    }
+    return top3
+}

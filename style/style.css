@@ -6,12 +6,14 @@
     cursor: pointer;
 }
 /* styling of images */
-#imgContainer img {
+#imgContainer img, #blindSpotSubContainer img {
     max-width: 200px;
     max-height: 200px;
-    margin: 10px;
-    cursor: pointer;
     border: 4px #0d6efd solid;
+}
+#imgContainer img {
+    cursor: pointer;
+    margin: 10px;
 }
 .selectedImg {
     border: 4px red solid !important;
@@ -44,6 +46,8 @@
     transition: linear 1100ms;
     padding: 0 !important;
 }
-/* styling of settings modal */
-
-
+#layoutBtn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+}

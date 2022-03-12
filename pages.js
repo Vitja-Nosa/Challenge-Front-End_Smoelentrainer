@@ -10,6 +10,7 @@ const pages = {
     </div>`,
     gameContainer : 
     `<div id="gameContainer">
+        <button class="btn btn-primary" id="layoutBtn" onclick="changeLayout()">change layout</button>
         <div class="row" id="timerContainer">
             <div class="progress mb-3 timerShell">
                 <div id="timer" class="progress-bar"></div>
@@ -106,6 +107,12 @@ const pages = {
         <ul class="row" id="log">
             <span class='text-center display-6'>You havn't played any games yet.</span>
         </ul>
+    `,
+    blindSpotContainer :
+    `   
+        <h1 id="mistakeTitle">These you got wrong the most: </h1>
+        <div class="row img-container my-5" id='blindSpotSubContainer'>
+        </div>
     `
 }
 
