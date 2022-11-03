@@ -7,5 +7,4 @@ In dit spel moet je acteurs/personages (plaatje) uit de film matchen met de juis
 
 Ook heb ik de applicatie deployed met behulp van github.
 Speel het spel zelf en kijk hoe goed jij bent:
-
-(https://vitja-nosa.github.io/Challenge-Front-End_Smoelentrainer/)
+https://vitja-nosa.github.io/Challenge-Front-End_Smoelentrainer/
